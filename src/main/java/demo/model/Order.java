@@ -67,5 +67,6 @@ public class Order {
     }
 
     public Order() {
+        this.date = new Date();
     }
 }
