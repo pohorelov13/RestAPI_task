@@ -23,6 +23,8 @@ public class Main {
         // create a resource config that scans for JAX-RS resources and providers
         // in REST_Task package
         final ResourceConfig rc = new ResourceConfig().packages("demo");
+        rc.register(new DependencyBinder());
+        rc.packages("demo.model", "demo.repo");
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI

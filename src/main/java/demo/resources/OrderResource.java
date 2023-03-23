@@ -3,6 +3,7 @@ package demo.resources;
 
 import demo.model.Order;
 import demo.services.OrderService;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class OrderResource {
 
-    private OrderService orderService = new OrderService();
+    @Inject
+    private OrderService orderService;
 
     @GET
     public List<Order> getAllOrders() {
@@ -29,6 +31,5 @@ public class OrderResource {
     @POST
     public void addOrder(Order order) {
         orderService.addOrder(order);
-        orderService.setCost(order);
     }
 }

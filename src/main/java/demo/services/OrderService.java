@@ -3,32 +3,34 @@ package demo.services;
 import demo.model.Order;
 import demo.model.Product;
 import demo.repo.OrderRepo;
+import demo.repo.OrderRepoInMemory;
+import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class OrderService {
-    private Map<Integer, Order> orders = OrderRepo.getOrders();
+    private OrderRepo orderRepo = new OrderRepoInMemory();
 
     public OrderService() {
         Order or = new Order(1, new Product("ANOTHER HARDCODE", 78.5, 25),
                 new Product("HARDCODE PRODUCT", 87.6, 13));
-        orders.put(1, or);
+        orderRepo.addOrder(or);
         setCost(or);
     }
 
     public void addOrder(Order order) {
-        order.setId(orders.size() + 1);
-        orders.put(order.getId(), order);
+        order.setId(orderRepo.getOrders().size() + 1);
+        setCost(order);
+        orderRepo.addOrder(order);
     }
 
     public Order getOrderById(int id) {
-        return orders.get(id);
+        return orderRepo.getOrders().get(id);
     }
 
     public List<Order> getOrders() {
-        return new ArrayList<>(orders.values());
+        return new ArrayList<>(orderRepo.getOrders().values());
     }
 
     public void setCost(Order order) {
